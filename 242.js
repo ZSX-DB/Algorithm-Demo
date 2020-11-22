@@ -5,8 +5,6 @@
  */
 
 
-
-
 // function isSameTree(p, q) {
 //     let pArr=p.split('').sort(),
 //         qArr=q.split('').sort(),
