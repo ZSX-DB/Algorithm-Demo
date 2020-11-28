@@ -1,234 +1,137 @@
-/**
- * 链表
- */
-
-// let Node = element => {
-//     //节点的值
-//     this.element = element;
-//     //指向下一个节点的指针
-//     this.next = null;
-// };
-
-let Node = function (element) {
-    this.element = element;
-    this.next = null;
-};
-
-
-
-// class LinkedList {
-//     constructor() {
-//         this.length = 0;
-//         this.head = null;
-//     }
-
-//     append(element) {    // 在链表尾部添加节点
-
-//         let node = new Node(element);
-//         if (this.head === null) {
-//             //如果当前链表为空，则将head指向node
-//             this.head = node;
-//         } else {
-//             //否则，找到链表尾部的元素，然后添加新元素
-//             let current = this.getElementAt(this.length - 1);
-//             current.next = node;
-//         }
-//         this.length++;
-
-//     }
-
-//     insert(position, element) {    // 在链表的指定位置插入节点
-//         if (position < 0 || position > this.length) return false;
-
-//         let node = new Node(element);
-
-//         if (position === 0) {
-//             node.next = this.head;
-//             this.head = node;
-//         } else {
-//             let previous = this.getElementAt(position - 1);
-//             node.next = previous.next;
-//             previous.next = node;
-//         }
-
-//         this.length++;
-//         return true;
-//     }
-
-//     removeAt(position) {    // 删除链表中指定位置的元素，并返回这个元素的值
-//         if (position < 0 || position >= this.length) return null;
-
-//         let current = this.head;
-    
-//         if (position === 0) this.head = current.next;
-//         else {
-//             let previous = this.getElementAt(position - 1);
-//             current = previous.next;
-//             previous.next = current.next;
-//         }
-    
-//         this.length--;
-//         return current.element;
-//     } 
-//     remove(element) {
-//     } // 删除链表中对应的元素
-//     indexOf(element) {
-//     } // 在链表中查找给定元素的索引
-//     getElementAt(position) {    // 返回链表中索引所对应的元素
-
-//         if (position < 0 || position >= this.length) {
-//             return null;
-//         } else {
-//             let current = this.head;
-//             for (let i = 0; i < position; i++) {
-//                 current = current.next;
-//             }
-//             return current;
-//         }
-
-//     }
-
-//     isEmpty() {
-//     } // 判断链表是否为空
-//     size() {
-//     } // 返回链表的长度
-//     getHead() {
-//     } // 返回链表的头元素
-//     clear() {
-//     } // 清空链表
-//     toString() {
-//     } // 辅助方法，按指定格式输出链表中的所有元素，方便测试验证结果
-
-// }
-
-class LinkedList {
-    constructor() {
-        this.length = 0;
-        this.head = null;
-    }
-
-    append (element) {
-        let node = new Node(element);
-
-        // 如果当前链表为空，则将head指向node
-        if (this.head === null) this.head = node;
-        else {
-            // 否则，找到链表尾部的元素，然后添加新元素
-            let current = this.getElementAt(this.length - 1);
-            current.next = node;
-        }
-
-        this.length++;
-    }
-
-    insert (position, element) {
-        // position不能超出边界值
-        if (position < 0 || position > this.length) return false;
-
-        let node = new Node(element);
-
-        if (position === 0) {
-            node.next = this.head;
-            this.head = node;
-        }
-        else {
-            let previous = this.getElementAt(position - 1);
-            node.next = previous.next;
-            previous.next = node;
-        }
-
-        this.length++;
-        return true;
-    }
-
-    removeAt (position) {
-        // position不能超出边界值
-        if (position < 0 || position >= this.length) return null;
-
-        let current = this.head;
-
-        if (position === 0) this.head = current.next;
-        else {
-            let previous = this.getElementAt(position - 1);
-            current = previous.next;
-            previous.next = current.next;
-        }
-
-        this.length--;
-        return current.element;
-    }
-
-    remove (element) {
-        let index = this.indexOf(element);
-        return this.removeAt(index);
-    }
-
-    indexOf (element) {
-        let current = this.head;
-
-        for (let i = 0; i < this.length; i++) {
-            if (current.element === element) return i;
-            current = current.next;
-        }
-
-        return -1;
-    }
-
-    getElementAt (position) {
-        if (position < 0 || position >= this.length) return null;
-
-        let current = this.head;
-        for (let i = 0; i < position; i++) {
-            current = current.next;
-        }
-        return current;
-    }
-
-    isEmpty () {
-        // return this.head === null;
-        return this.length === 0;
-    }
-
-    size () {
-        return this.length;
-    }
-
-    getHead () {
-        return this.head;
-    }
-
-    clear () {
-        this.head = null;
-        this.length = 0;
-    }
-
-    toString () {
-        let current = this.head;
-        let s = '';
-
-        while (current) {
-            let next = current.next;
-            next = next ? next.element : 'null';
-            s += `[element: ${current.element}, next: ${next}] `;
-            current = current.next;
-        }
-
-        return s;
+// 节点
+class Node {
+    constructor(el) {
+        this.el = el
+        this.next = null
     }
 }
 
-let linkedList =new LinkedList();
+class LinkList {
+    constructor() {
+        this.head = null
+        this.length = 0
+    }
 
-linkedList.append(10);
-linkedList.append(12);
-linkedList.append(17);
-console.log(linkedList.toString());
+    append(el) {
+        const node = new Node(el)
+        if (this.head === null) {
+            this.head = node
+        } else {
+            this.lastEl().next = node
+        }
+        this.length++
+    }
 
-linkedList.insert(2,22);
-linkedList.insert(1,6);
-linkedList.insert(4,34);
-console.log(linkedList.toString());
+    // 获取对应节点
+    elAt(position) {
+        if (position < 0 || position >= this.length) return null
+        let current = this.head
+        for (let i = 0; i < position; i++) {
+            current = current.next
+        }
+        return current
+    }
 
-linkedList.removeAt(2);
-linkedList.removeAt(4);
-console.log(linkedList.toString());
+    // 最后一个节点
+    lastEl() {
+        return this.elAt(this.length - 1)
+    }
+
+    // 移除对应节点
+    removeAt(position) {
+        if (position < 0 || position >= this.length) {
+            return null
+        } else if (position !== 0) {
+            this.elAt(position - 1).next = this.elAt(position + 1)
+            this.length--
+        } else {
+            this.head = this.head.next
+            this.length--
+        }
+    }
+
+    // 清除链表
+    clear() {
+        this.head = null
+        this.length = 0
+    }
+
+    // 判断是否为空
+    isEmpty() {
+        return this.head === null
+    }
+
+    // 格式化输出
+    log() {
+        let current = this.head
+        let text = ''
+        while (current) {
+            // text += `[el: ${current.el}, next: ${current.next ? current.next.el : null}]`
+            text += `${current.el} -> `
+            // 当直接对current赋值时，不会改变原来的引用对象
+            current = current.next
+        }
+        return text.substring(0, text.length - 4)
+    }
+
+    insert(position, el) {
+        const node = new Node(el)
+        if (position < 0 || position >= this.length) {
+            return null
+        } else if (position !== 0) {
+            node.next = this.elAt(position)
+            this.elAt(position - 1).next = node
+            this.length++
+        } else {
+            node.next = this.head
+            this.head = node
+            this.length++
+        }
+    }
+
+    includes(el) {
+        let current = this.head
+        while (current) {
+            if (current.el === el) return true
+            current = current.next
+        }
+        return false
+    }
+
+    indexOf(el) {
+        let current = this.head
+        let len = this.length
+        for (let i = 0; i < len; i++) {
+            if (current.el === el) return i
+            current = current.next
+        }
+        return -1
+    }
+
+}
+
+const ll = new LinkList()
+ll.append(3)
+ll.append(7)
+ll.append(12)
+ll.append(99)
+console.log(ll.log(), ll.length)
+
+ll.removeAt(1)
+console.log(ll.log(), ll.length)
+
+ll.removeAt(0)
+console.log(ll.log(), ll.length)
+
+ll.insert(0, 27)
+console.log(ll.log(), ll.length)
+
+ll.insert(1, 32)
+console.log(ll.log(), ll.length)
+
+console.log(ll.indexOf(44), ll.indexOf(32), ll.indexOf(99))
+console.log(ll.includes(44), ll.includes(12), ll.includes(99))
+
+
+ll.clear()
+console.log(ll.log(), ll.length, ll.isEmpty())
