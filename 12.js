@@ -77,22 +77,17 @@
 // }
 
 // 优化版贪心算法
-// const intToRoman = num => {
-//     let keys = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
-//     let values = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
-//     let str = ''
-//     for (let i = 0; i < 13; i++) {
-//         while (num >= keys[i]) {
-//             num -= keys[i]
-//             str += values[i]
-//         }
-//     }
-//     return str
-// }
-
-// 硬编码
 const intToRoman = num => {
-
+    let keys = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+    let values = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
+    let str = ''
+    for (let i = 0; i < 13; i++) {
+        while (num >= keys[i]) {
+            num -= keys[i]
+            str += values[i]
+        }
+    }
+    return str
 }
 
 console.log(intToRoman(3))
