@@ -7,9 +7,6 @@
  */
 
 
-
-
-
 //这个方法基于数组
 // function addTwoNumbers(l1, l2) {
 //     let len1 = l1.length, len2 = l2.length, len = 0, temp = [];
@@ -68,30 +65,30 @@
 
 // console.log(sum(3,5,4))
 
-var addTwoNumbers = function(l1, l2) {
+var addTwoNumbers = function (l1, l2) {
     let p1 = l1
     let p2 = l2
     let carry = 0
     const dummy = new ListNode()
     let pointer = dummy
     while (p1 || p2 || carry) {
-      const num1 = p1 ? p1.val : 0
-      const num2 = p2 ? p2.val : 0
-      const sum = num1 + num2 + carry
-      if (sum > 9) {
-        pointer.next = new ListNode(sum % 10)
-        carry = 1
-      } else {
-        pointer.next = new ListNode(sum)
-        carry = 0
-      }
-      if (p1) p1 = p1.next
-      if (p2) p2 = p2.next
-      pointer = pointer.next
+        const num1 = p1 ? p1.val : 0
+        const num2 = p2 ? p2.val : 0
+        const sum = num1 + num2 + carry
+        if (sum > 9) {
+            pointer.next = new ListNode(sum % 10)
+            carry = 1
+        } else {
+            pointer.next = new ListNode(sum)
+            carry = 0
+        }
+        if (p1) p1 = p1.next
+        if (p2) p2 = p2.next
+        pointer = pointer.next
     }
     return dummy.next
-  };
+};
 
 
-  console.log(addTwoNumbers([2,4,3],[5,6,4]));
+console.log(addTwoNumbers([2, 4, 3], [5, 6, 4]));
 
