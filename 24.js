@@ -33,21 +33,6 @@ const l4 = {
     }
 }
 
-// 单链表反转
-// const swap = head => {
-//     let pre = null
-//     let cur = head
-//     while (cur){
-//         const tmp = cur.next
-//         cur.next = pre
-//         pre = cur
-//         cur = tmp
-//     }
-//     return pre
-// }
-//
-// console.log(swap(l1))
-
 // 不符合题意，设置标志位，奇数执行操作
 // const swapPairs = head => {
 //     let mark = 1
@@ -65,24 +50,33 @@ const l4 = {
 // }
 
 // 迭代法
+// const swapPairs = head => {
+//     let dummyHead = {val: 0}
+//     dummyHead.next = head
+//     let tmp = dummyHead
+//     while (tmp.next && tmp.next.next) {
+//         const node1 = tmp.next
+//         const node2 = tmp.next.next
+//         tmp.next = node2
+//         node1.next = node2.next
+//         node2.next = node1
+//         tmp = node1
+//     }
+//     return dummyHead.next
+// }
+
+// 递归
 const swapPairs = head => {
-    let dummyHead = {val: 0}
-    dummyHead.next = head
-    let tmp = dummyHead
-    while (tmp.next && tmp.next.next){
-        const node1 = tmp.next
-        const node2 = tmp.next.next
-        tmp.next = node2
-        node1.next = node2.next
-        node2.next = node1
-        tmp = node1
-    }
-    return dummyHead.next
+    if(head === null || head.next === null) return head
+    const newHead = head.next
+    // 返回的必须是排序好的链表
+    head.next = swapPairs(newHead.next)
+    newHead.next = head
+    return newHead
 }
 
 
-
-// console.log(swapPairs(l1))
-// console.log(swapPairs(l2))
-// console.log(swapPairs(l3))
-console.log(swapPairs(l4))
+console.log(swapPairs(l1))
+console.log(swapPairs(l2))
+console.log(swapPairs(l3))
+console.log(swapPairs(l4).next.next)
