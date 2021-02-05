@@ -22,26 +22,43 @@
 //     return Math.max(...records)
 // }
 
+// 滑动窗口
+// const equalSubstring = (s, t, maxCost) => {
+//     const len = s.length
+//     let list = []
+//     for (let i = 0; i < len; i++) {
+//         list[i] = Math.abs(s.charCodeAt(i) - t.charCodeAt(i))
+//     }
+//     let max = 0
+//     let left = 0
+//     let right = 0
+//     let sum = 0
+//     while (right < len) {
+//         sum += list[right]
+//         while (sum > maxCost) {
+//             sum -= list[left]
+//             left++
+//         }
+//         max = Math.max(max, right - left + 1)
+//         right++
+//     }
+//     return max
+// }
+
+// 优化
 const equalSubstring = (s, t, maxCost) => {
-    const len = s.length
-    let list = []
-    for (let i = 0; i < len; i++) {
-        list[i] = Math.abs(s.charCodeAt(i) - t.charCodeAt(i))
-    }
-    let max = 0
     let left = 0
     let right = 0
-    let sum = 0
-    while (right < len) {
-        sum += list[right]
-        while (sum > maxCost) {
-            sum -= list[left]
+    let maxSum = 0
+    for (let i = 0; i < s.length; i++) {
+        maxSum += Math.abs(s.charCodeAt(i) - t.charCodeAt(i))
+        if (maxSum > maxCost) {
+            maxSum -= Math.abs(s.charCodeAt(left) - t.charCodeAt(left))
             left++
         }
-        max = Math.max(max, right - left + 1)
         right++
     }
-    return max
+    return right - left
 }
 
 
