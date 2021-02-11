@@ -1,4 +1,4 @@
-const permute = (nums) => {
+const permute = nums => {
     const res = []
     const used = []
     const dfs = (path = []) => {
