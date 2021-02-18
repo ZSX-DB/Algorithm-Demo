@@ -9,7 +9,7 @@
 
 ### state和status应用场景
 
-各种翻译：状态机 state machine    状态码 status code    状态迁移图 state transition diagram
+各种翻译：有限状态机 finite state machine    状态码 status code    状态迁移图 state transition diagram
 
 存在迁移关系的为state，例子有TCP state
 
