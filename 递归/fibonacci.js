@@ -44,7 +44,8 @@ const factorial = (n, result) => {
 
 console.log(factorial(5, 1), factorial(6, 1))
 
-// 如果能写成尾递归，那基本能以迭代方式写出
+// 如果能写成尾递归，那都能以迭代方式写出
+// 尽量不使用尾递归，避免栈溢出以及提高可读性
 const fact = n => {
     const list = [1]
     for (let i = 1; i <= n; i++) {
