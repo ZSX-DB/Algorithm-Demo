@@ -1,74 +1,55 @@
-/**
- * 224、基本计算器
- * 实现一个基本的计算器来计算一个简单的字符串表达式 s 的值。
- * 链接：https://leetcode-cn.com/problems/basic-calculator/
- */
-
 const calculate = s => {
-    // 去除空格, 转化为字符串数组, 数字字符串转换为数字
-    const sList = s.replace(/\s*/g, '').split('').map(item => !isNaN(Number(item)) ? Number(item) : item)
-
-    const calc = arr => {
-        // 反转字符串
-        arr.reverse()
-        const list = []
-        for (let i = 0; i < arr.length; i++) {
-            if (typeof arr[i] === "number") {
-                let base = 0
-                let num = arr[i] * (10 ** base)
-                while (typeof arr[i] === "number") {
-                    if (typeof arr[i + 1] !== "number") break
-                    base++
-                    i++
-                    num += arr[i] * (10 ** base)
-                }
-                list.push(num)
-            } else {
-                list.push(arr[i])
-            }
+    // 计算无括号的数组
+    const calc = list => {
+        let val = list[0]
+        for (let i = 2; i < list.length; i += 2) {
+            list[i - 1] === '+' ? val += list[i] : val -= list[i]
         }
-        list.reverse()
-        let res
-        const getVal = start => {
-            for (let i = start; i < list.length; i++) {
-                if (typeof list[i] === "string") {
-                    switch (list[i]) {
-                        case '+':
-                            res += list[i + 1]
-                            break
-                        case '-':
-                            res -= list[i + 1]
-                            break
-                    }
-                }
-            }
-        }
-        if( list[0] === "+"){
-            res = list[1]
-            getVal(2)
-        }else if (list[0] === '-'){
-            res = -list[1]
-            getVal(2)
-        }else {
-            res = list[0]
-            getVal(1)
-        }
-        return res
+        return val
     }
+    const notNum = ['+', '-', '(', ')']
 
+    // 添加+号可简单处理末尾为数字的情况, 如果有前置符号添加0不影响最终结果，但方便处理
+    s = s.replace(/ /g, '') + '+'
+    if (s[0] === '+' || s[0] === '-') s = `0${s}`
 
-    const stack = []
+    // 双指针处理，将list转化为数字与符号组合的混合数组
+    let list = []
+    let left = 0
+    let right = 0
     for (let i = 0; i < s.length; i++) {
-        if (sList[i] === ')') {
-            const list = stack.splice(stack.lastIndexOf('('))
-            list.shift()
-            stack.push(calc(list))
+        if (notNum.includes(s[i])) {
+            const str = s.substring(left, right)
+            if (str !== '') list.push(Number(str))
+            list.push(s[i])
+            left = right
+            left++
+        }
+        right++
+    }
+    list.pop()
+
+    // 不含有(可直接处理，此步可省略，如果为了效率可添加
+    if (!list.includes('(')) return calc(list)
+
+    // 栈，最终得到一个无括号的反转的混合数组
+    let len = list.length
+    const stack = []
+    while (len) {
+        len--
+        if (list[len] === '(') {
+            const idx = stack.lastIndexOf(')')
+            const tmp = calc(stack.slice(idx + 1).reverse())
+            stack.length = idx
+            stack.push(tmp)
         } else {
-            stack.push(sList[i])
+            stack.push(list[len])
         }
     }
-    return calc(stack)
+
+    return calc(stack.reverse())
 }
+
 
 console.log(calculate('1 - (2 -(76 - 3))+10-25'))
 console.log(calculate('(1+(4+5+2)-3)+(6+8)'))
@@ -76,3 +57,4 @@ console.log(calculate('1+1'))
 console.log(calculate('2-1+2'))
 console.log(calculate('-(3 + (4 + 5))'))
 console.log(calculate('+(3 + (4 + 5))'))
+console.log(calculate('-2+1'))
