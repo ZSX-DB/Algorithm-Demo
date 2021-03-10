@@ -1,5 +1,5 @@
 /**
- * 根据原生js代码改进方法
+ * 根据 lodash 代码改进方法
  * @param str
  * @param count
  * @returns {string}
@@ -53,7 +53,7 @@ const repeatThree = (str, count) => {
 }
 
 
-// 根据原生js的方法实现，效率比原生略低
+// 根据 lodash 的方法实现，效率比原生略低
 const repeatFour = (str, count) => {
     let res = ''
     while (count) {

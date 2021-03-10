@@ -6,7 +6,7 @@ class Node {
     }
 }
 
-class LinkList {
+class LinkedList {
     constructor() {
         this.head = null
         this.length = 0
@@ -110,7 +110,7 @@ class LinkList {
 
 }
 
-const ll = new LinkList()
+const ll = new LinkedList()
 ll.append(3)
 ll.append(7)
 ll.append(12)
