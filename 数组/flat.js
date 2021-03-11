@@ -24,6 +24,14 @@ const arr = [1, 2, 3, [11, 12], [false, true], [21, 22, [31, 32, [41, 42]]], ['f
 // 或使用Infinity
 const flat = arr => arr.flat(Infinity)
 
+// 迭代方式
+// const flat = arr => {
+//     while (arr.some(item => Array.isArray(item))) {
+//         arr = [].concat(...arr)
+//     }
+//     return arr
+// }
+
 // 递归
 // const flat = arr => {
 //     const list = []
