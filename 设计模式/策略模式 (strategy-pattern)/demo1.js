@@ -25,19 +25,19 @@
 
 // 策略类（开发人员）
 const Strategies = {
-    "backend": function(task) {
-        console.log('进行后端任务：', task);
+    "backend": task => {
+        console.log('进行后端任务：', task)
     },
-    "frontend": function(task) {
-        console.log('进行前端任务：', task);
+    "frontend": task => {
+        console.log('进行前端任务：', task)
     },
-    "testend": function(task) {
-        console.log('进行测试任务：', task);
+    "testend"(task){
+        console.log('进行测试任务：', task)
     }
 };
 
 //  环境类（开发组长）
-const Context = function(type, task) {
+const Context = function (type, task) {
     typeof Strategies[type] === 'function' && Strategies[type](task);
 }
 
@@ -49,3 +49,5 @@ Context('testend', '完成系统并发测试');
 // 1、算法独立封装，任务分发；
 // 2、复用性更好，不局限于 Context 调用；
 // 3、代码阅读性提高。
+
+console.log(Strategies)
