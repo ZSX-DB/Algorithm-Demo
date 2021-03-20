@@ -23,31 +23,23 @@
  *
  */
 
-// 策略类（开发人员）
-const Strategies = {
-    "backend": task => {
-        console.log('进行后端任务：', task)
-    },
-    "frontend": task => {
-        console.log('进行前端任务：', task)
-    },
-    "testend"(task){
-        console.log('进行测试任务：', task)
-    }
-};
 
-//  环境类（开发组长）
-const Context = function (type, task) {
-    typeof Strategies[type] === 'function' && Strategies[type](task);
+// 1、算法独立封装，任务分发
+// 2、复用性更好，不局限于 Context 调用
+// 3、代码阅读性提高
+
+const kpi = {
+    'A': salary => salary * 1.2,
+    'B': salary => salary * 1.1,
+    'C': salary => salary,
+    'D': salary => salary * 0.9,
+    'E': salary => salary * 0.8
 }
 
-Context('backend', '优化服务器缓存');
-Context('frontend', '优化首页加载速度');
-Context('testend', '完成系统并发测试');
+const setSalary = (level, salary) => kpi[level](salary)
+
+console.log(setSalary('A', 20000))
+console.log(setSalary('B', 10000))
+console.log(setSalary('D', 9000))
 
 
-// 1、算法独立封装，任务分发；
-// 2、复用性更好，不局限于 Context 调用；
-// 3、代码阅读性提高。
-
-console.log(Strategies)

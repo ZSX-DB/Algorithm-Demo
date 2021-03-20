@@ -26,6 +26,7 @@
 //     return stack[0]
 // }
 
+// 策略模式
 const evalRPN = tokens => {
     const sign = {
         '+': (x, y) => x + y,
