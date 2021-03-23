@@ -1,7 +1,7 @@
 /**
  * 数组扁平化
  */
-const arr = [1, 2, 3, [11, 12], [false, true], [21, 22, [31, 32, [41, 42]]], ['first', 'second', ['third']]]
+const arr = [1, 2, 3, [11, 12], [false, true], [21, 22, [31, 32, [41, 42]]], ['first', 'second', ['third']], [Symbol(4)]]
 
 // 使用toString(但必须数组不能有字符串，不推荐使用)
 // const flat = arr => JSON.parse(`[${arr.toString()}]`)
