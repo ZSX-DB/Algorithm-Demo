@@ -1,19 +1,18 @@
 /**
  * 选择排序
+ * @param nums
+ * @returns {*}
  */
-
-const list = [5, 7, 2, 9, 21, 16]
-
-const selectSort = list => {
-    const len = list.length
+const selectSort = nums => {
+    const len = nums.length
     for(let i=0;i<len;i++){
         let minIndex = i
         for(let j = i+1;j<len;j++){
-            if(list[j]<list[minIndex]) minIndex = j
+            if(nums[j]<nums[minIndex]) minIndex = j
         }
-        [list[i], list[minIndex]] = [list[minIndex], list[i]]
+        [nums[i], nums[minIndex]] = [nums[minIndex], nums[i]]
     }
-    return list
+    return nums
 }
 
-console.log(selectSort(list))
+console.log(selectSort([5, 7, 2, 9, 21, 16]))
