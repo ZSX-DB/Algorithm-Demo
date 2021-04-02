@@ -1,9 +1,32 @@
 // 暴力法，会超时
+// const searchMatrix = (matrix, target) => {
+//     for(const row of matrix){
+//         for(const col of row){
+//             if(col === target) return true
+//         }
+//     }
+//     return false
+// }
+
+// 二分查找
 const searchMatrix = (matrix, target) => {
-    for(const row of matrix){
-        for(const col of row){
-            if(col === target) return true
+    const binarySearch = (nums, target) => {
+        let low = 0
+        let high = nums.length - 1
+        while (low <= high) {
+            const mid = Math.floor((low + high) / 2)
+            if (nums[mid] > target) {
+                high = mid - 1
+            } else if (nums[mid] < target) {
+                low = mid + 1
+            } else {
+                return true
+            }
         }
+        return false
+    }
+    for(const row of matrix){
+        if(binarySearch(row, target) === true) return true
     }
     return false
 }
