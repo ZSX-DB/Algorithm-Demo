@@ -5,37 +5,27 @@
  * 链接：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array
  */
 
-
-// function removeDuplicates (nums) {
-//     let len=nums.length,
-//         count=0
-//
-//     for(let i=0;i<len;i++){
-//         if(nums[i]!==nums[i-1]){
-//             nums[i-count]=nums[i]
-//         }else {
-//             count++
+// const removeDuplicates = nums => {
+//     for (let i = 1; i < nums.length; i++) {
+//         if(nums[i] === nums[i-1]){
+//             nums.splice(i, 1)
+//             i--
 //         }
 //     }
-//
-//     return len-count
+//     return nums
 // }
 
-// 双指针
-function removeDuplicates (nums) {
-    let len=nums.length,
-        i=0
-
-    for(let j=1;j<len;j++){
-        if(nums[j]!==nums[j-1]){
+const removeDuplicates = nums => {
+    let i = 0
+    for (let j = 1; j < nums.length; j++) {
+        if (nums[j] !== nums[j - 1]) {
             i++
-            nums[i]=nums[j]
+            nums[i] = nums[j]
         }
     }
-
-    return i+1
+    return nums.slice(0, i + 1)
 }
 
-console.log(removeDuplicates([0,0,1,1,1,2,2,3,3,4]))
-console.log(removeDuplicates([1,1,2]))
-console.log(removeDuplicates([0,0,0,0,0,0,0]))
+console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]))
+console.log(removeDuplicates([1, 1, 2]))
+console.log(removeDuplicates([0, 0, 0, 0, 0, 0, 0]))
