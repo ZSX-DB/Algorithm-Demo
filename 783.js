@@ -21,22 +21,6 @@ const binaryTree = {
 }
 
 
-// const minDiffInBST = root => {
-//     const list = []
-//     const getVal = node => {
-//         list.push(node.val)
-//         if (node.left) getVal(node.left)
-//         if (node.right) getVal(node.right)
-//     }
-//     getVal(root)
-//     list.sort((a, b) => a - b)
-//     const res = []
-//     for (let i = 1; i < list.length; i++) {
-//         res.push(list[i] - list[i - 1])
-//     }
-//     return Math.min(...res)
-// }
-
 // 中序遍历
 const minDiffInBST = root => {
     let list = []
@@ -49,5 +33,24 @@ const minDiffInBST = root => {
     getVal(root)
     return Math.min(...list.map((item, idx) => item - list[idx - 1]).filter(item => !isNaN(item)))
 }
+
+// 使用pre来保存前驱节点
+// const minDiffInBST = root => {
+//     let pre = -1
+//     let res = Infinity
+//     const iterate = node => {
+//         if(node === null) return
+//         iterate(node.left)
+//         if(pre !== -1){
+//             res = Math.min(res, node.val - pre)
+//             pre = node.val
+//         }else {
+//             pre = node.val
+//         }
+//         iterate(node.right)
+//     }
+//     iterate(root)
+//     return res
+// }
 
 console.log(minDiffInBST(binaryTree))
