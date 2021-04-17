@@ -20,7 +20,8 @@
 //     return false
 // }
 
-// 桶
+// 设置桶的大小为 t+1，桶内的必定满足 abs(nums[i] - nums[j]) <= t，判断前 k 个元素都在哪个桶里(满足 abs(i - j) <= k)，如果两种的桶 id 相同，即符合
+// 可能刚好在相邻桶里面，因此需要判断前一个桶和后一个桶
 const containsNearbyAlmostDuplicate = (nums, k, t) => {
     // t+1 为桶的范围
     const getID = x => x < 0 ? Math.floor((x + 1) / (t + 1)) - 1 : Math.floor(x / (t + 1))
@@ -31,7 +32,7 @@ const containsNearbyAlmostDuplicate = (nums, k, t) => {
         const id = getID(num)
         // 存在则说明两个两个元素再同一个桶里
         if (bucket.has(id)) return true
-        // 可能刚好在相邻桶里
+        // 判断是否在相邻桶
         if (bucket.has(id - 1) && Math.abs(num - bucket.get(id - 1)) <= t) return true
         if (bucket.has(id + 1) && Math.abs(num - bucket.get(id + 1)) <= t) return true
         bucket.set(id, num)
