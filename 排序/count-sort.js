@@ -5,7 +5,6 @@
  */
 
 const countSort = nums => {
-    // 通常 max 和 min 这两个值都是由传参传入，并且 max 和 min 的值不能过大，因此计数排序的适用范围小
     const max = Math.max(...nums)
     const min = Math.min(...nums)
     const res = []
