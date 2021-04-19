@@ -5,11 +5,28 @@
  */
 
 
-function strStr(haystack, needle) {
-    return haystack.indexOf(needle)
+// const strStr = (haystack, needle) => haystack.indexOf(needle)
+
+const strStr = (haystack, needle) => {
+    if (needle === '' || haystack === needle) return 0
+    if (haystack.length < needle.length) return -1
+    const len = needle.length
+    for (let i = 0; i < haystack.length; i++) {
+        if (haystack[i] === needle[0]) {
+            let idx = 0
+            while (idx < len) {
+                if (haystack[i + idx] !== needle[idx]) break
+                idx++
+            }
+            if(idx === len) return i
+        }
+    }
+    return -1
 }
 
-console.log(strStr('idea','ea'))
-console.log(strStr('idea','a'))
-console.log(strStr('idea','ac'))
-console.log(strStr('idea',''))
+// console.log(strStr('idea', 'ea'))
+// console.log(strStr('idea', 'a'))
+// console.log(strStr('idea', 'ac'))
+// console.log(strStr('idea', 'de'))
+// console.log(strStr('idea', ''))
+console.log(strStr('aaaa', 'baaa'))
