@@ -17,7 +17,8 @@ const addBinary = (a, b) => {
     return res
 }
 
-// 转 10 再转 2，可能会溢出，解决方案：使用 bigInt
+// 转 10 再转 2，可能会溢出，解决方案：使用 BigInt
+// BigInt 的构造函数只有一个参数，所以需要加上这个 0b 或 0B 来表明这是一个代表二进制数的字符串
 // const addBinary = (a, b) => (BigInt(`0b${a}`) + BigInt(`0b${b}`)).toString(2)
 
 console.log(addBinary('11', '1'))
