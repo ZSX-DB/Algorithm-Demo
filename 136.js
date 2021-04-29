@@ -4,25 +4,32 @@
  * 链接：https://leetcode-cn.com/problems/single-number/
  */
 
-function singleNumber(nums) {
-    const list = [...new Set(nums)]
-    let num
-    list.forEach(item => {
-        if (nums.indexOf(item) === nums.lastIndexOf(item)) num = item
-    })
-    return num
-}
+// const singleNumber = nums => nums.find(num => nums.indexOf(num) === nums.lastIndexOf(num))
 
-let list = [1, 2, 3, 4, 5, 6, 7, 7, 7, 4, 3, 2, 2, 1, 6, 27]
-console.log(singleNumber(list))
+// const singleNumber = nums => {
+//     nums.sort((a, b) => a - b)
+//     for (let i = 1; i < nums.length; i += 2) {
+//         if (nums[i] !== nums[i - 1]) return nums[i - 1]
+//     }
+//     return nums[nums.length - 1]
+// }
 
-// 使用异或
-function singleNum(nums) {
-    let base = 0
-    for (let i = 0; i < nums.length; i++) {
-        base = base ^ nums[i]
-    }
-    return base
-}
+/**
+ * 使用异或 (具体参考异或性质)
+ * @param nums
+ * @returns {number}
+ */
+// const singleNumber = nums => {
+//     let res = 0
+//     for (const num of nums) {
+//         res ^= num
+//     }
+//     return res
+// }
 
-console.log(singleNum(list))
+// const singleNumber = nums => ([...new Set(nums)].reduce((pre, cur) => pre + cur) * 2 - nums.reduce((pre, cur) => pre + cur))
+
+const singleNumber = nums => nums.reduce((pre, cur) => pre ^ cur, 0)
+
+console.log(singleNumber([2, 2, 1]))
+console.log(singleNumber([4, 1, 2, 1, 2]))
