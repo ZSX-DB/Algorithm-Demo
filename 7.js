@@ -4,16 +4,24 @@
  * 链接：https://leetcode-cn.com/problems/reverse-integer/
  */
 
-function reverse(x) {
+// const reverse = x => {
+//     const val = String(Math.abs(x)).split('').reverse().join('')
+//     if (val > 2 ** 31) return 0
+//     return x > 0 ? val : -val
+// }
 
-    let xNum = Math.abs(x).toString().split('').reverse().join('');
 
-    if (x < 0) {
-        return xNum <= Math.pow(2, 31) ? -xNum : 0
-    } else {
-        return xNum < Math.pow(2, 31) ? xNum : 0
+const reverse = x => {
+    let res = 0
+    let num = Math.abs(x)
+    while (num) {
+        const remainder = num % 10
+        res = res * 10 + remainder
+        num = (num - remainder) / 10
     }
-
+    return res > 2 ** 31 ? 0 : (x > 0 ? res : -res)
 }
 
+
+console.log(reverse(123))
 console.log(reverse(1534236469))
