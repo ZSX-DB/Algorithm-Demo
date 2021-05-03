@@ -6,17 +6,17 @@
  * 链接：https://leetcode-cn.com/problems/jump-game/
  */
 
-function canJump(nums) {
-    let len=nums.length
-    if(len===0) return false
-    if(len===1) return true
+const canJump = nums => {
+    let len = nums.length
+    if (len === 0) return false
+    if (len === 1) return true
 
-    let rightMost=0
+    let rightMost = 0
 
-    for(let i=0;i<len;++i){
-        if(i<=rightMost){
-            rightMost=Math.max(rightMost,nums[i]+i)
-            if(rightMost>=len-1) return true
+    for (let i = 0; i < len; ++i) {
+        if (i <= rightMost) {
+            rightMost = Math.max(rightMost, nums[i] + i)
+            if (rightMost >= len - 1) return true
         }
     }
 
@@ -24,21 +24,21 @@ function canJump(nums) {
 
 }
 
-console.log(canJump([2,3,1,1,4]))
-console.log(canJump([3,2,1,0,4]))
+console.log(canJump([2, 3, 1, 1, 4]))
+console.log(canJump([3, 2, 1, 0, 4]))
 console.log(canJump([]))
-console.log(canJump([9,5,2,7,6]))
-console.log(canJump([9,1,1,0,9]))
-console.log(canJump([5,0,1,0,9]))
-console.log(canJump([0,1]))
-console.log(canJump([0,1,3]))
-console.log(canJump([0,3,1]))
-console.log(canJump([0,2,1]))
+console.log(canJump([9, 5, 2, 7, 6]))
+console.log(canJump([9, 1, 1, 0, 9]))
+console.log(canJump([5, 0, 1, 0, 9]))
+console.log(canJump([0, 1]))
+console.log(canJump([0, 1, 3]))
+console.log(canJump([0, 3, 1]))
+console.log(canJump([0, 2, 1]))
 console.log(canJump([0]))
 console.log(canJump([1]))
-console.log(canJump([2,0,0]))
-console.log(canJump([3,0,0,0]))
-console.log(canJump([1,0,0]))
-console.log(canJump([4,0,0]))
-console.log(canJump([2,5,0,0]))
+console.log(canJump([2, 0, 0]))
+console.log(canJump([3, 0, 0, 0]))
+console.log(canJump([1, 0, 0]))
+console.log(canJump([4, 0, 0]))
+console.log(canJump([2, 5, 0, 0]))
 
