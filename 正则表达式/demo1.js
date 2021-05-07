@@ -6,6 +6,8 @@ const plusReg = /tes+t/
 const multiReg = /tes*t/
 const queReg = /tes?t/
 
+// 出现正则的有 468
+
 
 // + 号表示必须出现至少一个，匹配 test tesst tessst 等
 console.log(str1.replace(plusReg, ''), str2.replace(plusReg, ''), str3.replace(plusReg, ''))
