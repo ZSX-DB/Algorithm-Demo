@@ -1,3 +1,4 @@
+// 暴力匹配
 // class WordDictionary {
 //     constructor() {
 //         this.collection = []
@@ -12,54 +13,52 @@
 //     }
 //
 //     match(str, word) {
-//         let flag = true
-//         str.split('').forEach((item, idx) => {
-//             if (word[idx] !== item && word[idx] !== '.') flag = false
-//         })
-//         return flag
+//         for (let idx = 0; idx < word.length; idx++) {
+//             if (word[idx] !== str[idx] && word[idx] !== '.') return false
+//         }
+//         return true
 //     }
 //
 // }
 
+// 字典树
 class WordDictionary {
     constructor() {
         this.root = {}
     }
 
     addWord(word) {
-        let tmp = this.root
+        let cur = this.root
         for (const ch of word) {
-            if (!tmp[ch]) tmp[ch] = {}
-            tmp = tmp[ch]
+            if (!cur[ch]) cur[ch] = {}
+            cur = cur[ch]
         }
-        tmp['end'] = true
+        cur.end = true
     }
 
     search(word) {
-        let tmp = this.root
-        for (const ch of word) {
-            if(ch !== '.'){
-                tmp = tmp[ch]
-                if (tmp === undefined) return false
-            }
-        }
-        return !!tmp['end']
+        return this.match(word, this.root)
     }
 
-    match(word) {
-        let tmp = this.root
-        for (const ch of word) {
-            if(ch !== '.'){
-                tmp = tmp[ch]
-                if (tmp === undefined) return false
+    match(word, cur) {
+        for (let i = 0; i < word.length; i++) {
+            const ch = word[i]
+            if (ch === '.') {
+                for (const key in cur) {
+                    // 关键步骤
+                    if (cur.hasOwnProperty(key) && this.match(word.slice(i + 1, word.length), cur[key])) return true
+                }
+                return false
+            } else if (!cur[ch]) {
+                return false
             }
+            cur = cur[ch]
         }
-        return true
+        return Boolean(cur.end)
     }
 
 }
 
-// abcd abeg
 
 const wd = new WordDictionary()
 wd.addWord('bad')
@@ -69,14 +68,3 @@ console.log(wd.search('pad'))
 console.log(wd.search('bad'))
 console.log(wd.search('.ad'))
 console.log(wd.search('b..'))
-
-let obj = {
-    a: 1,
-    b: 2
-}
-console.log(Object.entries(obj))
-
-// console.log('abc')
-
-// abc a..
-// abc .a.
