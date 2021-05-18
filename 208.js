@@ -4,28 +4,28 @@ class Trie {
     }
 
     insert(word) {
-        let tmp = this.root
+        let cur = this.root
         for (const ch of word) {
-            if (!tmp[ch]) tmp[ch] = {}
-            tmp = tmp[ch]
+            if (!cur[ch]) cur[ch] = {}
+            cur = cur[ch]
         }
-        tmp['end'] = true
+        cur.end = true
     }
 
     search(word) {
-        let tmp = this.root
+        let cur = this.root
         for (const ch of word) {
-            tmp = tmp[ch]
-            if (tmp === undefined) return false
+            cur = cur[ch]
+            if (cur === undefined) return false
         }
-        return !!tmp['end']
+        return !!cur.end
     }
 
     startsWith(word) {
-        let tmp = this.root
+        let cur = this.root
         for (const ch of word) {
-            tmp = tmp[ch]
-            if (tmp === undefined) return false
+            cur = cur[ch]
+            if (cur === undefined) return false
         }
         return true
     }
