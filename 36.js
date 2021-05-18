@@ -21,9 +21,21 @@
 
 const isValidSudoku = board => {
     const init = () => new Array(9).fill(0).map(_ => [])
+    const getBoxIdx = (i, j) => Math.floor(i / 3) * 3 + Math.floor(j / 3)
     const rows = init()
     const cols = init()
     const boxes = init()
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            const cur = board[i][j]
+            if (cur === '.') continue
+            if (rows[i].includes(cur) || cols[j].includes(cur) || boxes[getBoxIdx(i, j)].includes(cur)) return false
+            rows[i].push(cur)
+            cols[j].push(cur)
+            boxes[getBoxIdx(i, j)].push(cur)
+        }
+    }
+    return true
 }
 
 console.log(isValidSudoku([['5', '3', '.', '.', '7', '.', '.', '.', '.']
