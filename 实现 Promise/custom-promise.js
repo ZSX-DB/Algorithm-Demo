@@ -1,7 +1,12 @@
+/**
+ * Custom Promise
+ * 参考链接：
+ * https://juejin.cn/post/6945319439772434469
+ * https://juejin.cn/post/6924188714419634190
+ */
 const PENDING = 0
 const FULFILLED = 1
 const REJECTED = 2
-
 
 const resolvePromise = (promiseCopy, res, resolve, reject) => {
     // 如果相同则为循环引用，返回 TypeError
