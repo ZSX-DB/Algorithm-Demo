@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二叉树可视化</title>
+    <script src="../../lib/vue.min.js"></script>
+    <style>
+
+        #text {
+            width: 420px;
+            height: 30px;
+        }
+
+        .node {
+            margin: 0 auto;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #000;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 60px;
+            user-select: none;
+        }
+
+        .line-box {
+            position: relative;
+            height: 120px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<main id="app">
+    <label for="text">
+        Origin:
+        <input type="text" id="text" v-model="originRaw">
+    </label><br>
+    <label for="range">
+        Range:
+        <input type="range" id="range" max="1" min="0" step="0.01" v-model="scale">
+    </label><br>
+    <button @click="recreate">Recreate</button>
+    <div :style="setTreeBox()">
+        <div v-for="(row, rowIdx) in root"
+             :key="row.len"
+             :style="setRowStyle()">
+            <div v-for="(node, nodeIdx) in row.nodes"
+                 :key="nodeIdx"
+                 :style="setNodeStyle(row.len)">
+                <div class="node" v-if="node">
+                    {{ node }}
+                </div>
+                <div class="line-box" :style="setLineBoxStyle(row.len)">
+                    <div :style="setLineStyle(row.len, rowIdx, nodeIdx, 0)"></div>
+                    <div :style="setLineStyle(row.len, rowIdx, nodeIdx, 1)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script>
+
+    const localStore = {
+        data() {
+            return {
+                originRaw: '',
+                origin: [1, 2, 2, 3, 4, 4, null, 5, 5, 6, null, 7, 7],
+                root: [],
+                width: 0,
+                scale: 1
+            }
+        },
+        created() {
+            this.createBinaryTree()
+        },
+        methods: {
+            createBinaryTree() {
+                const origin = [...this.origin]
+                const root = []
+                let curIdx = 0
+                let curLen = 1
+                while (curLen < origin.length) {
+                    root.push({
+                        len: curLen,
+                        nodes: origin.slice(curIdx, curIdx + curLen)
+                    })
+                    curIdx += curLen
+                    curLen *= 2
+                }
+
+                const last = root[root.length - 1]
+                // 补足null
+                last.nodes.push(...new Array(last.len - last.nodes.length).fill(null))
+                this.width = last.len * 120
+                this.root = root
+            },
+            recreate() {
+                this.origin = JSON.parse(this.originRaw)
+                this.root = []
+                this.createBinaryTree()
+            },
+            setTreeBox() {
+                return {
+                    transform: `scale(${this.scale})`
+                }
+            },
+            setRowStyle() {
+                return {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    width: `${this.width}px`,
+                    height: '180px'
+                }
+            },
+            setNodeStyle(len) {
+                return {
+                    width: `${100 / len}%`
+                }
+            },
+            setLineBoxStyle(len) {
+                return {
+                    width: `${this.width / len / 2}px`,
+                    marginLeft: `${this.width / len / 4}px`
+                }
+            },
+            setLineStyle(len, rowIdx, nodeIdx, mark) {
+                const setLine = (x1, y1, x2, y2) => {
+                    const rectX = Math.min(x1, x2)
+                    const rectY = Math.min(y1, y2)
+                    const rectWidth = Math.abs(x1 - x2)
+                    const rectHeight = Math.abs(y1 - y2)
+                    const width = Math.ceil(Math.sqrt(rectWidth ** 2 + rectHeight ** 2))
+                    const height = 2
+                    const xPad = (rectWidth - width) / 2
+                    const yPad = (rectHeight - height) / 2
+                    const radNum = -Math.atan2((y1 - y2), (x1 - x2))
+                    return {
+                        position: 'absolute',
+                        backgroundColor: '#000',
+                        width: `${width}px`,
+                        height: `${height}px`,
+                        transform: `translate(${rectX + xPad}px, ${rectY + yPad}px) rotate(${radNum}rad)`
+                    }
+                }
+                const setShow = (nextObj, idx) => {
+                    const isShow = nextObj === undefined ? false : !(nextObj.nodes[idx] === null || nextObj.nodes[idx] === undefined)
+                    return {
+                        display: isShow ? '' : 'none'
+                    }
+                }
+                const left = {
+                    ...setLine(0, 0, this.width / len / 4, 120),
+                    ...setShow(this.root[rowIdx + 1], nodeIdx * 2)
+                }
+                const right = {
+                    ...setLine(this.width / len / 4, 120, this.width / len / 2, 0),
+                    ...setShow(this.root[rowIdx + 1], nodeIdx * 2 + 1)
+                }
+
+                return mark === 0 ? left : right
+
+            }
+        }
+    }
+
+    Vue.createApp(localStore).mount('#app')
+
+</script>
+
+</body>
+</html>
+
