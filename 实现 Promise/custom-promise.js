@@ -3,6 +3,7 @@
  * 参考链接：
  * https://juejin.cn/post/6945319439772434469
  * https://juejin.cn/post/6924188714419634190
+ * 根据定义，then 中的回调是被传入微任务队列中
  */
 const PENDING = 0
 const FULFILLED = 1
@@ -13,7 +14,7 @@ const resolvePromise = (promiseCopy, res, resolve, reject) => {
     if (promiseCopy === res) return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
     // 判断是否为 CustomPromise 实例
     if (res instanceof CustomPromise) {
-        // 调用 then，目的是改变状态为 fulfilled 或 rejected
+        // 调用 then，目的是改变状态为 FULFILLED 或 REJECTED
         res.then(resolve, reject)
     } else {
         resolve(res)
