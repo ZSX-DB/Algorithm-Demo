@@ -28,6 +28,10 @@
             height: 120px;
         }
 
+        .recreate-btn {
+            margin: 7px 0;
+        }
+
 
     </style>
 </head>
@@ -37,12 +41,14 @@
     <label for="text">
         Origin:
         <input type="text" id="text" v-model="originRaw">
-    </label><br>
+    </label>
+    <br>
     <label for="range">
         Range:
         <input type="range" id="range" max="1" min="0" step="0.01" v-model="scale">
-    </label><br>
-    <button @click="recreate">Recreate</button>
+    </label>
+    <br>
+    <button class="recreate-btn" @click="recreate">Recreate</button>
     <div :style="setTreeBox()">
         <div v-for="(row, rowIdx) in root"
              :key="row.len"
@@ -94,7 +100,7 @@
     }
 
     const binaryTree = () => {
-        const origin = reactive([3,5,1,6,7,4,2,null,null,null,null,null,null,9,8])
+        const origin = reactive([7, 3, 15, null, null, 9, 20])
         const root = reactive([])
         const width = ref(0)
         const originRaw = ref('')
