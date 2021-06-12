@@ -6,18 +6,18 @@ class MaxHeap {
         this.heap = []
     }
 
-    init(nums) {
-        for (const num of nums) {
-            this.add(num)
-        }
-    }
-
     size() {
         return this.heap.length
     }
 
     swap(i, j) {
         [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]]
+    }
+
+    init(nums) {
+        for (const num of nums) {
+            this.add(num)
+        }
     }
 
     build() {
@@ -41,12 +41,6 @@ class MaxHeap {
     add(value) {
         this.heap.push(value)
         this.build()
-    }
-
-    getRoot() {
-        const res = this.heap.shift()
-        this.build()
-        return res
     }
 
     clear() {
