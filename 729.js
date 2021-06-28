@@ -1,16 +1,40 @@
+// 两个日程安排 [s1，e1) 和 [s2，e2) 不冲突: e1<=s2 或 e2<=s1
+// class MyCalendar {
+//     constructor() {
+//         this.limits = []
+//     }
+//
+//     book(start, end) {
+//         if (this.limits.every(limit => end <= limit[0] || limit[1] <= start)) {
+//             this.limits.push([start, end])
+//             return true
+//         } else {
+//             return false
+//         }
+//     }
+// }
+
 class MyCalendar {
     constructor() {
         this.limits = []
     }
 
-    // 两个日程安排 [s1，e1) 和 [s2，e2) 不冲突: e1<=s2 或 e2<=s1
     book(start, end) {
-        if (this.limits.every(limit => end <= limit[0] || limit[1] <= start)) {
-            this.limits.push([start, end])
-            return true
-        } else {
-            return false
+        let left = 0
+        let right = this.limits.length
+        while (left < right) {
+            const mid = Math.floor((left + right) / 2)
+            const [s, e] = this.limits[mid]
+            if (start >= e) {
+                left = mid + 1
+            } else if (end <= s) {
+                right = mid
+            } else {
+                return false
+            }
         }
+        this.limits.splice(left, 0, [start, end])
+        return true
     }
 }
 
