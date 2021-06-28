@@ -14,8 +14,6 @@ class MyCalendar {
     }
 }
 
-// TreeMap
-
 const mc = new MyCalendar()
 // console.log(mc.book(10, 20))
 // console.log(mc.book(15, 25))
@@ -31,5 +29,3 @@ console.log(mc.book(19, 25))
 console.log(mc.book(3, 8))
 console.log(mc.book(8, 13))
 console.log(mc.book(18, 27))
-
-console.log(mc.limits)
