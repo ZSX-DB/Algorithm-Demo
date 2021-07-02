@@ -1,10 +1,27 @@
+// const maxIceCream = (costs, coins) => {
+//     costs.sort((x, y) => x - y)
+//     let count = 0
+//     for (const cost of costs) {
+//         if (coins < cost) break
+//         coins -= cost
+//         count++
+//     }
+//     return count
+// }
+
 const maxIceCream = (costs, coins) => {
-    costs.sort((x, y) => x - y)
-    let count = 0
+    const flags = []
     for (const cost of costs) {
-        if (coins < cost) break
-        coins -= cost
-        count++
+        const flag = flags[cost]
+        flags[cost] = (flag ? flag + 1 : 1)
+    }
+    let count = 0
+    for (let i = 0; i < flags.length; i++) {
+        if (flags[i] === undefined) continue
+        if (coins < i) break
+        const curCount = Math.min(flags[i], Math.floor(coins / i))
+        count += curCount
+        coins -= curCount * i
     }
     return count
 }
