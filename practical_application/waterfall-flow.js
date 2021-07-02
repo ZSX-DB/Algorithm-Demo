@@ -35,7 +35,5 @@ const setColumnsByDP = imgHeights => {
     return getSelected(len, halfSum)
 }
 
-//s
-
 console.log(setColumnsByDP(imgHeights))
 
