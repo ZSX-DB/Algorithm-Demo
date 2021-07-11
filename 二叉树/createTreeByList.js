@@ -4,6 +4,16 @@
  * @returns {{val: *}}
  */
 const createTreeByList = list => {
+    // 最大可能深度
+    const maxDepth = list.filter(item => item !== null).length
+    // 最大可能节点数量
+    const maxNodeNums = Array(maxDepth).fill(0).map((_, idx) => idx).reduce((sum, num) => sum + 2 ** num, 0)
+    // 补充 null
+    const toEntire = () => {
+        for (let i = 0; i < maxNodeNums; i++) {
+            if (list[i] === null) list.splice(2 * i + 1, 0, null, null)
+        }
+    }
     // 记录前序遍历结果
     const preorder = []
     // 记录中序遍历结果
@@ -41,6 +51,7 @@ const createTreeByList = list => {
         }
         return helper(0, preorder.length - 1, 0, inorder.length - 1)
     }
+    toEntire()
     preTraversal(0)
     inTraversal(0)
     return buildTree(preorder, inorder)
@@ -48,5 +59,8 @@ const createTreeByList = list => {
 
 const list1 = [3, 9, 20, null, null, 15, 7]
 const list2 = [3, 9, 20, null, null, 15]
+const list3 = [2, null, 3, null, 4, null, 5, null, 6]
+
 console.log(createTreeByList(list1))
 console.log(createTreeByList(list2))
+console.log(createTreeByList(list3))
