@@ -2,9 +2,117 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
 <body>
-$END$
+
+<div for="letter in letters">
+    <span>
+        <a>
+            {letter}
+        </a>
+    </span>
+</div>
+
+<button onclick="render()">
+    Render
+</button>
+
+<button onclick="add()">
+    Add
+</button>
+
+<script>
+
+    const list = [
+        'A', 'B', 'C'
+    ]
+    let content = ''
+
+    list.forEach((item, index) => {
+        content += `<div> ${item}---${index} </div>`
+    })
+
+    console.log('content', content)
+
+    document.body.insertAdjacentHTML('beforebegin', content)
+
+    // const getNodeStruct = node => {
+    //     const tag = node.tagName.toLowerCase()
+    //     const children = []
+    //     for (let i = 0; i < node.children.length; i++) {
+    //         const child = node.children[i]
+    //         children.push(getNodeStruct(child))
+    //     }
+    //     return {
+    //         tag,
+    //         children
+    //     }
+    // }
+
+    const getStructHTML = node => {
+        return `<${node.tagName.toLowerCase()}>${node.innerHTML}</${node.tagName.toLowerCase()}>`
+    }
+
+    // const getNodeStruct = node => {
+    //     const tag = node.tagName.toLowerCase()
+    //     const children = []
+    //     const text = node.innerText
+    //     for (let i = 0; i < node.children.length; i++) {
+    //         const child = node.children[i]
+    //         children.push(getNodeStruct(child))
+    //     }
+    //     return {
+    //         tag,
+    //         children,
+    //         text
+    //     }
+    // }
+
+    // const buildContent = struct => `<${struct.tag}>${ struct.children.map(child => buildContent(child))}</${struct.tag}>`
+
+    const store = {
+        letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+        addLetters(){
+            this.letters.push('H')
+            console.log(this.letters, document.querySelectorAll('[for]'))
+            this.render()
+        },
+        render() {
+            const forList = document.querySelectorAll('[for]')
+            console.log(forList.length)
+            forList.forEach(forItem => {
+                let html = ''
+                console.log('钱', html)
+                const key = forItem.getAttribute('for')
+                // 这步骤有问题，明晚研究
+                const struct = getStructHTML(forItem)
+                const [item, data] = key.split(' in ')
+                if (this[data]) {
+                    console.log(this[data])
+                    this[data].forEach(cur => {
+                        console.log(cur)
+                        html += struct.replaceAll(`{${item}}`, cur)
+                        html += '\n'
+                    })
+                }
+                console.log(html)
+                forItem.innerHTML = html
+            })
+        }
+    }
+
+    const render = () => {
+        store.render()
+    }
+
+    const add = () => {
+        store.addLetters()
+    }
+
+
+</script>
+
+
 </body>
 </html>

@@ -60,7 +60,9 @@ const createTreeByList = list => {
 const list1 = [3, 9, 20, null, null, 15, 7]
 const list2 = [3, 9, 20, null, null, 15]
 const list3 = [2, null, 3, null, 4, null, 5, null, 6]
+const list4 = [1, 2, 3, 4, 5]
 
 console.log(createTreeByList(list1))
 console.log(createTreeByList(list2))
 console.log(createTreeByList(list3))
+console.log(createTreeByList(list4))
