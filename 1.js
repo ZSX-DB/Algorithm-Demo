@@ -5,39 +5,33 @@
  * 链接：https://leetcode-cn.com/problems/two-sum
  */
 
-
-// 暴力法
-// function twoSum(nums, target){
-//     let len=nums.length,results=[];
-//     for(let i=0;i<len;i++){
-//         for(let j=0;j<len;j++){
-//             if(nums[i]+nums[j]===target&&i!==j){
-//                 results.push(i,j)
-//             }
-//         }
+// const twoSum = (nums, target) => {
+//     const flags = nums.reduce((total, num, index) => {
+//         total.set(num, total.has(num) ? [...total.get(num), index] : [index])
+//         return total
+//     }, new Map())
+//     for (const key of flags.keys()) {
+//         if (flags.has(target - key) === false) continue
+//         if (target - key === key && flags.get(key).length === 1) continue
+//         if (target - key === key && flags.get(key).length === 2) return flags.get(key)
+//         return [flags.get(key)[0], flags.get(target - key)[0]]
 //     }
-//     return [results[0],results[1]];
-// };
+// }
 
-// 利用类哈希表减少查询时间(用数组存放信息)
-function twoSum(nums,target){
-    let len=nums.length,temp=[];
-    for(let i=0;i<len;i++){
-        let dif=target-nums[i];
-        if(temp[dif]!==undefined){
-            return[temp[dif],i]
+const twoSum = (nums, target) => {
+    const flags = new Map()
+    for (let i = 0; i < nums.length; i++) {
+        const num = nums[i]
+        if (flags.has(target - num)) {
+            return [flags.get(target - num), i]
+        } else {
+            flags.set(num, i)
         }
-        temp[nums[i]]=i;
     }
 }
 
-
-
-//输出了[3,4]而不是[2,4]
-console.log(twoSum([1,2,4,4,5],9));
-
-
-console.log(twoSum([3,4,5],8));
-console.log(twoSum([3,3],6));
-console.log(twoSum([3,2,4],6));
-console.log(twoSum([2,7,11,15],13));
+console.log(twoSum([1, 2, 4, 4, 5], 9))
+console.log(twoSum([3, 4, 5], 8))
+console.log(twoSum([3, 3], 6))
+console.log(twoSum([3, 2, 4], 6))
+console.log(twoSum([2, 7, 11, 15], 13))
