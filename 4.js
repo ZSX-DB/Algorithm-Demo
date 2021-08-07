@@ -6,19 +6,11 @@
  * 链接：https://leetcode-cn.com/problems/median-of-two-sorted-arrays/
  */
 
- 
-function findMedianSortedArrays(nums1, nums2) {
-    // let arr=nums1+nums2;    相加后变成字符串而不是数组
-    //解构赋值
-    let arr=[...nums1,...nums2],len=arr.length;
-    arr.sort((a,b)=>a-b);
-    if(len%2===1){
-        // return arr[Math.floor(len/2)]; 
-        return arr[len/2-0.5];
-    }else{
-        return (arr[len/2]+arr[len/2-1])/2;
-    }
+const findMedianSortedArrays = (nums1, nums2) => {
+    const nums = [...nums1, ...nums2].sort((x, y) => x - y)
+    const len = nums.length
+    return len % 2 ? nums[Math.floor(len / 2)] : (nums[len / 2] + nums[len / 2 - 1]) / 2
 }
 
 
-console.log(findMedianSortedArrays([1,3],[2]));
+console.log(findMedianSortedArrays([1, 3], [2]))
