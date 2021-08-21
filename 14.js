@@ -4,68 +4,46 @@
  * 链接：https://leetcode-cn.com/problems/longest-common-prefix/
  */
 
-// function longestCommonPrefix(strs) {
-//
-//     if(strs.length===0){
-//         return ''
-//     }
-//
-//     // num接收最长公共前缀的长度
-//     let minLen = strs[0].length,
-//         num = 0,
-//         letterArr = []
-//     // 获取最短长度
-//     strs.forEach(item => {
-//         if (item.length < minLen) {
-//             minLen = item.length
-//         }
-//     })
-//
-//     const isSame = val => val === letterArr[0],
-//         changeNum = () => {
-//             if (letterArr.every(isSame)) {
-//                 num += 1
-//                 letterArr = []
-//             } else {
-//                 num += 0
-//             }
-//         }
-//
+// 纵向扫描
+// const longestCommonPrefix = strs => {
+//     const minLen = strs.length === 0 ? 0 : Math.min(...strs.map(str => str.length))
+//     let pre = ''
 //     for (let i = 0; i < minLen; i++) {
-//         strs.forEach(item => {
-//             letterArr.push(item[i])
-//         })
-//         changeNum()
+//         if(strs.every(str => str[i] === strs[0][i]) === false){
+//             break
+//         }
+//         pre += strs[0][i]
 //     }
-//
-//     return num === 0 ? "" : strs[0].substring(0, num)
-//
+//     return pre
 // }
 
-function longestCommonPrefix(strs) {
-    if (strs.length === 0) {
-        return ''
-    }
-    let temp = strs[0],
-        len = strs.length
-    for (let i = 1; i < len; i++) {
-        let j = 0
-        for (; j < temp.length && j < strs[i].length; j++) {
-            if (temp[j] !== strs[i][j]) break
+// 横向扫描
+const longestCommonPrefix = strs => {
+    if (strs.length === 0) return ''
+    const lcp = (str1, str2) => {
+        const len = Math.min(str1.length, str2.length)
+        let idx = 0
+        while (idx < len && str1[idx] === str2[idx]) {
+            idx++
         }
-        temp = temp.substring(0, j)
-        if (temp === '') {
-            return temp
+        return str1.substring(0, idx)
+    }
+    let pre = strs[0]
+    for (let i = 1; i < strs.length; i++) {
+        pre = lcp(pre, strs[i])
+        if (pre === '') {
+            break
         }
     }
-
-    return temp
-
+    return pre
 }
+
 
 console.log(longestCommonPrefix(["flower", "flow", "flight"]))
 console.log(longestCommonPrefix(["dog", "racecar", "car"]))
 console.log(longestCommonPrefix([]))
 console.log(longestCommonPrefix(["7", "7", "78"]))
+console.log(longestCommonPrefix(['']))
+console.log(longestCommonPrefix(["acc", "aaa", "aaba"]))
 
 
