@@ -4,35 +4,36 @@
  * 链接：https://leetcode-cn.com/problems/3sum-closest/
  */
 
-function threeSumClosest(nums, target) {
-    nums.sort((a, b) => a - b)
 
-    let len = nums.length,
-        res = nums[0] + nums[1] + nums[2]
-
+const threeSumClosest = (nums, target) => {
+    nums.sort((x, y) => x - y)
+    const sums = []
+    const len = nums.length
     for (let i = 0; i < len; i++) {
-        let left = i + 1,
-            right = len - 1
-
+        let left = i + 1
+        let right = len - 1
         while (left < right) {
-            let sum = nums[i] + nums[left] + nums[right]
-            if (Math.abs(res - target) > Math.abs(sum - target)) {
-                res = sum
-            } else if (sum > target) {
+            const sum = nums[i] + nums[left] + nums[right]
+            sums.push(sum)
+            if (sum > target) {
                 right--
             } else if (sum < target) {
                 left++
-            } else if (sum === target) {
-                return res
+            } else {
+                return target
             }
         }
-
     }
-
+    let res = Infinity
+    for (const sum of sums) {
+        if (Math.abs(target - sum) < Math.abs(target - res)) {
+            res = sum
+        }
+    }
     return res
-
 }
 
 
 console.log(threeSumClosest([-1, 2, 1, -4], 1))
+console.log(threeSumClosest([0, 1, 2], 0))
 
