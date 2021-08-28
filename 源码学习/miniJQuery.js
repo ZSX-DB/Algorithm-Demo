@@ -12,7 +12,12 @@ class ChainCalls {
         return this
     }
 
-    end(){
+    // add(num) {
+    //     this.sum += num
+    //     return new ChainCalls(this.sum)
+    // }
+
+    end() {
         return this.sum
     }
 
