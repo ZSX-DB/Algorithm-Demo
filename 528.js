@@ -31,7 +31,7 @@ class Solution {
             let low = 0
             let high = this.prefix.length - 1
             while (low < high) {
-                const mid = Math.floor((high - low) / 2) + low
+                const mid = Math.floor((low + high) / 2)
                 if (this.prefix[mid] < x) {
                     low = mid + 1
                 } else {
