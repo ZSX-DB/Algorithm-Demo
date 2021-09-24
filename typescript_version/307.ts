@@ -32,23 +32,10 @@
 class NumArray {
     private readonly tree: number[]
     private readonly n: number
-
-    constructor(nums: number[]) {
-        this.n = nums.length
-        this.tree = this.buildTree(nums)
-    }
-
-    private buildTree = (nums: number[]) => {
+    private readonly buildTree = (nums: number[]) => {
         const n = nums.length
-        const tree: number[] = new Array(n * 2).fill(0)
-        let i = n
-        let j = 0
-        while (i < 2 * n) {
-            tree[i] = nums[j]
-            i++
-            j++
-        }
-        i = n - 1
+        const tree: number[] = [...Array(n).fill(0), ...nums]
+        let i = n - 1
         while (i > 0) {
             tree[i] = tree[i * 2] + tree[i * 2 + 1]
             i--
@@ -56,9 +43,15 @@ class NumArray {
         return tree
     }
 
+    constructor(nums: number[]) {
+        this.n = nums.length
+        this.tree = this.buildTree(nums)
+    }
+
     update(index: number, val: number): void {
+        const tree = this.tree
         index += this.n
-        this.tree[index] = val
+        tree[index] = val
         while (index > 0) {
             let left = index
             let right = index
@@ -67,7 +60,7 @@ class NumArray {
             } else {
                 left = index - 1
             }
-            this.tree[Math.floor(index / 2)] = this.tree[left] + this.tree[right]
+            tree[Math.floor(index / 2)] = tree[left] + tree[right]
             index = Math.floor(index / 2)
         }
     }
