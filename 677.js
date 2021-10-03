@@ -23,7 +23,6 @@ class MapSum {
             }
             node = node[str]
         }
-        console.log(node)
         const dfs = node => {
             if (node === undefined) {
                 return
