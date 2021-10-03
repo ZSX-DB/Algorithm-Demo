@@ -16,7 +16,7 @@ var blogSchema = {
     title: createSchemaItem(Type.String, ''),
     body: createSchemaItem(Type.String, ''),
     is_official: createSchemaItem(Type.Boolean, false),
-    like_num: createSchemaItem(Type.Number, '0'),
+    like_num: createSchemaItem(Type.Number, 0),
     hate_num: createSchemaItem(Type.Number, 0),
     share_num: createSchemaItem(Type.Number, 0),
     tags: createSchemaItem(Type.StringArray, []),

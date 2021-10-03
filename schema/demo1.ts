@@ -50,7 +50,7 @@ const blogSchema: Schema = {
     create_date: createSchemaItem(Type.Date, new Date())
 }
 
-const createModel = (schema: Schema) => (originData: { [key: string]: any }): Schema => {
+const createModel = (schema: Schema) => (originData: { [key: string]: any }) => {
     // @ts-ignore
     const keys = new Set(Object.keys(originData))
     const newData = {}
