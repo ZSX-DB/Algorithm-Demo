@@ -1,11 +1,9 @@
-<<<<<<< HEAD
 ////////////////////////////////////////////////////
 // 参考 https://zhuanlan.zhihu.com/p/26535479
 //     https://juejin.cn/post/6844903684866834440
 ////////////////////////////////////////////////////
 
-=======
->>>>>>> bbe9772... update
+
 const repeat = function* <T>(item: T) {
     while (true) {
         yield item
