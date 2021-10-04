@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dirty Check</title>
+</head>
+<body>
+
+<!--参考 https://zhuanlan.zhihu.com/p/24990192-->
+<h1> Dirty Check 实现双向绑定 </h1>
+
+<label>
+    <input bind="count" type="number">
+    <button click="increment">increment</button>
+    <button click="reduction">reduction</button>
+</label>
+
+<div bind="count"></div>
+
+<script>
+
+    class DirtyCheck {
+        constructor(store) {
+            this.__watchers__ = []
+            this._click()
+            this._input()
+            this._init(store)
+            this._start()
+        }
+
+        _init(store) {
+            for (const key in store) {
+                if (store.hasOwnProperty(key)) {
+                    this[key] = store[key]
+                }
+            }
+        }
+
+        // fn 为函数，使用函数便能在每次调用时返回它的最新值
+        _watch(name, fn, listener) {
+            this.__watchers__.push({
+                name,
+                last: '',
+                newValue: fn,
+                listener: listener || (() => {
+                })
+            })
+        }
+
+        _click() {
+            const clickList = document.querySelectorAll('[click]')
+            for (const clickItem of clickList) {
+                clickItem.addEventListener('click', () => {
+                    this[clickItem.getAttribute('click')]()
+                    this._digest()
+                })
+            }
+        }
+
+        _input() {
+            const inputList = document.querySelectorAll('input[bind]')
+            for (const inputItem of inputList) {
+                inputItem.addEventListener('input', () => {
+                    this[inputItem.getAttribute('bind')] = inputItem.value
+                    this._digest()
+                })
+            }
+        }
+
+        _digest() {
+            const bindList = document.querySelectorAll('[bind]')
+            let dirty = true
+            while (dirty) {
+                dirty = false
+                for (const watcher of this.__watchers__) {
+                    const newValue = watcher.newValue()
+                    const oldValue = watcher.last
+                    if (newValue !== oldValue) {
+                        dirty = true
+                        watcher.listener(oldValue, newValue)
+                        watcher.last = newValue
+
+                        for (const bindItem of bindList) {
+                            const modelName = bindItem.getAttribute('bind')
+                            if (modelName !== watcher.name) continue
+                            if (bindItem.tagName === 'INPUT') {
+                                bindItem.value = this[modelName]
+                            } else {
+                                bindItem.innerHTML = this[modelName]
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+        _start() {
+            for (const key in this) {
+                if (this.hasOwnProperty(key) &&
+                    key !== '__watchers__' &&
+                    typeof this[key] !== 'function'
+                ) {
+                    this._watch(key, (index => {
+                        return () => this[index]
+                    })(key))
+                }
+            }
+
+            this._digest()
+
+        }
+
+    }
+
+    const localStore = {
+        count: 0,
+        increment() {
+            this.count++
+        },
+        reduction() {
+            this.count--
+        }
+    }
+
+    new DirtyCheck(localStore)
+
+</script>
+
+</body>
+</html>
