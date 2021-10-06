@@ -100,101 +100,54 @@ const tn5 = {
     right: null
 }
 
+const tn6 = null
+
 const serialize = (root: TreeNode | null): string => {
-    if (root === null) {
-        return '[]'
-    }
-    const getMaxDepth = (node: TreeNode): number => {
+    const helper = (node: TreeNode | null, str: string = '') => {
         if (node === null) {
-            return 0
+            str += 'None,'
+        } else {
+            str += `${node.val},`
+            str = helper(node.left, str)
+            str = helper(node.right, str)
         }
-        const leftDepth = getMaxDepth(node.left)
-        const rightDepth = getMaxDepth(node.right)
-        return Math.max(leftDepth, rightDepth) + 1
+        return str
     }
-    const maxDepth = getMaxDepth(root)
-    const nodes = []
-    const queue: TreeNode[] = [root]
-    let currDepth = 1
-    while (currDepth <= maxDepth && queue.length) {
-        const length = queue.length
-        for (let i = 0; i < length; i++) {
-            const currNode = queue.shift()
-            if (currNode === null) {
-                nodes.push(null)
-                continue
-            }
-            nodes.push(currNode.val)
-            if (currNode.left !== null) {
-                queue.push(currNode.left)
-            } else {
-                queue.push(null)
-            }
-            if (currNode.right !== null) {
-                queue.push(currNode.right)
-            } else {
-                queue.push(null)
-            }
-        }
-        currDepth++
-    }
-    return JSON.stringify(nodes)
+    return helper(root)
 }
 
 const deserialize = (data: string): TreeNode | null => {
-    const nodes = JSON.parse(data)
-    if(nodes.length === 0){
-        return null
-    }
-    nodes.push(null)
-    const maxPossibleDepth = nodes.filter(node => node !== null).length
-    const maxPossibleNodeNums = Array(maxPossibleDepth).fill(0).map((_, idx) => idx).reduce((sum, num) => sum + 2 ** num, 0)
-    const fillNull = () => {
-        for (let i = 0; i < maxPossibleNodeNums; i++) {
-            if (nodes[i] === null) nodes.splice(2 * i + 1, 0, null, null)
+    const dataArray = data.split(',')
+    const helper = (dataList: string[]) => {
+        if (dataList[0] === 'None') {
+            dataList.shift()
+            return null
         }
+        const root = new TreeNode(parseInt(dataList[0]))
+        dataList.shift()
+        root.left = helper(dataList)
+        root.right = helper(dataList)
+        return root
     }
-    fillNull()
-    const items = []
-    let len = 1
-    let start = 0
-    while (len < nodes.length) {
-        const curr = []
-        for (let i = start; i < start + len; i++) {
-            curr.push(nodes[i])
-        }
-        if (curr.every(item => item === null || item === undefined)) {
-            break
-        }
-        items.push(curr)
-        start += len
-        len *= 2
-    }
-    items.reverse()
-    for (let i = 0; i < items.length; i++) {
-        if (i === 0) {
-            items[i] = items[i].map(item => item === null ? null : {val: item, left: null, right: null})
-        } else {
-            items[i] = items[i].map((item, index) => item === null ? null : {
-                val: item,
-                left: items[i - 1][2 * index],
-                right: items[i - 1][2 * index + 1]
-            })
-        }
-    }
-    return items[items.length - 1][0]
+    return helper(dataArray)
 }
 
-// console.log(serialize(tn1))
-// console.log(serialize(tn2))
-// console.log(serialize(tn3))
-// console.log(serialize(tn4))
-// console.log(serialize(tn5))
-// console.log(serialize(null))
+const tn1Str = serialize(tn1)
+const tn2Str = serialize(tn2)
+const tn3Str = serialize(tn3)
+const tn4Str = serialize(tn4)
+const tn5Str = serialize(tn5)
+const tn6Str = serialize(tn6)
+console.log(tn1Str)
+console.log(tn2Str)
+console.log(tn3Str)
+console.log(tn4Str)
+console.log(tn5Str)
+console.log(tn6Str)
 
-// console.log(deserialize('[1,2,3,null,null,4,5]'))
-// console.log(deserialize('[1,2,null,3,null,4,null,5,null]'))
-// console.log(deserialize('[1,2,2]'))
-// console.log(deserialize('[3,2,4,3]'))
-// console.log(deserialize('[3,2,null,3]'))
-// console.log(deserialize('[1]'))
+console.log(deserialize(tn1Str))
+console.log(deserialize(tn2Str))
+console.log(deserialize(tn3Str))
+console.log(deserialize(tn4Str))
+console.log(deserialize(tn5Str))
+console.log(deserialize(tn6Str))
