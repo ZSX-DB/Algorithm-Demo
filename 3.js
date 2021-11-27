@@ -8,7 +8,7 @@ const lengthOfLongestSubstring = s => {
     const window = []
     let maxlength = 0
     for (const ch of s) {
-        let idx = window.indexOf(ch)
+        const idx = window.indexOf(ch)
         window.splice(0, idx + 1)
         window.push(ch)
         maxlength = Math.max(maxlength, window.length)
