@@ -9,9 +9,7 @@ const lengthOfLongestSubstring = s => {
     let maxlength = 0
     for (const ch of s) {
         let idx = window.indexOf(ch)
-        if (idx !== -1) {
-            window.splice(0, idx + 1)
-        }
+        window.splice(0, idx + 1)
         window.push(ch)
         maxlength = Math.max(maxlength, window.length)
     }
