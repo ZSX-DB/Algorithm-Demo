@@ -1,0 +1,43 @@
+var activeEffect;
+var Deps = /** @class */ (function () {
+    function Deps(value) {
+        this.subscribers = new Set();
+        this._value = value;
+    }
+    Object.defineProperty(Deps.prototype, "value", {
+        get: function () {
+            this.depend();
+            return this._value;
+        },
+        set: function (newValue) {
+            this._value = newValue;
+            this.notify();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Deps.prototype.depend = function () {
+        if (activeEffect) {
+            this.subscribers.add(activeEffect);
+        }
+    };
+    Deps.prototype.notify = function () {
+        this.subscribers.forEach(function (effect) {
+            effect();
+        });
+    };
+    return Deps;
+}());
+var watchEffect = function (effect) {
+    activeEffect = effect;
+    effect();
+    activeEffect = null;
+};
+var ok = new Deps(true);
+var msg = new Deps('Hello world');
+watchEffect(function () {
+    if (ok.value) {
+        console.log(msg.value);
+    }
+});
+msg.value = 'change';

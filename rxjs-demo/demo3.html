@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo3</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/rxjs/7.3.0/rxjs.umd.js"></script>
+</head>
+<body>
+
+<h1>
+    Subscriptions can also be put together
+</h1>
+
+<script>
+
+    const {interval} = rxjs
+
+    // 多订阅
+    const observable1 = interval(400);
+    const observable2 = interval(300);
+
+    const subscription = observable1.subscribe(x => console.log('first: ' + x));
+    const childSubscription = observable2.subscribe(x => console.log('second: ' + x));
+
+    subscription.add(childSubscription)
+
+    setTimeout(() => {
+        // Unsubscribes BOTH subscription and childSubscription
+        subscription.unsubscribe();
+    }, 1000);
+
+
+</script>
+
+</body>
+</html>

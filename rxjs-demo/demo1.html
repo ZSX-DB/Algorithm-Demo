@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo1</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/rxjs/7.3.0/rxjs.umd.js"></script>
+</head>
+<body>
+
+<script>
+
+    const {Observable, from} = rxjs
+
+    const observable = new Observable(subscriber => {
+        subscriber.next(1);
+        subscriber.next(2);
+        subscriber.next(3);
+        setTimeout(() => {
+            subscriber.next(4);
+        }, 1000);
+        subscriber.next(5);
+        subscriber.next(6);
+        subscriber.complete();
+    });
+
+    observable.subscribe({
+        next(x) {
+            console.log('got value ' + x);
+        },
+        error(err) {
+            console.error('something wrong occurred: ' + err);
+        },
+        complete() {
+            console.log('done');
+        },
+    });
+
+    // const foo = from([10, 20, 30]);
+    // const subscription = foo.subscribe(x => console.log(x));
+    // // Later:
+    // subscription.unsubscribe();
+
+</script>
+
+</body>
+</html>

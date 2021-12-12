@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subject</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/rxjs/7.3.0/rxjs.umd.js"></script>
+</head>
+<body>
+
+<script>
+
+    const {Subject, from} = rxjs
+
+    const subject = new Subject()
+
+    subject.subscribe({
+        next: v => {
+            console.log(`Observer A: ${v}`)
+        }
+    })
+
+    subject.subscribe(v => {
+        console.log(`Observer B: ${v}`)
+    })
+
+    subject.next(1)
+    subject.next(2)
+
+    const observable = from([3, 4, 5])
+    observable.subscribe(subject)
+
+
+</script>
+
+</body>
+</html>
