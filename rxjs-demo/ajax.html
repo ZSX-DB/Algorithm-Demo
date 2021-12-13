@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/rxjs/7.3.0/rxjs.umd.js"></script>
+</head>
+<body>
+
+<script>
+
+
+    const {operators, of, Observable, concat, from, concatAll, merge, mergeMap, interval, forkJoin, timer} = rxjs
+    const {map, take} = operators
+    const {ajax} = rxjs.ajax
+
+    // const letters = of('a', 'b', 'c');
+    // const result = letters.pipe(
+    //     mergeMap(x => interval(1000).pipe(map(i => x+i))),
+    // );
+    // result.subscribe(x => console.log(x));
+
+    // const apis = of('https://api.github.com/users?per_page=5', 'https://api.github.com/users?per_page=10')
+    //     .pipe(map(url => ajax(url).pipe(map(user => user.response))))
+    //     .subscribe(x => {
+    //         x.subscribe(y => {
+    //             console.log(y)
+    //         })
+    //     })
+
+    // concat(
+    //     ajax(`https://api.github.com/users?per_page=5`),
+    //     ajax(`https://api.github.com/users?per_page=10`),
+    // ).pipe(mergeMap(user => user.response)).subscribe(x => {
+    //     console.log('first: ', x)
+    // })
+    // const observable = forkJoin([
+    //     of(1, 2, 3, 4),
+    //     Promise.resolve(8),
+    //     timer(1000),
+    // ]);
+    // observable.subscribe({
+    //     next: value => console.log(value),
+    //     complete: () => console.log('This is how it ends!'),
+    // });
+
+    const http = {
+        get: url => ajax(url).pipe(map(v => v.response))
+    }
+
+    // forkJoin(...args: any[]): Observable<any>
+    forkJoin([
+        http.get('https://api.github.com/users?per_page=5'),
+        http.get('https://api.github.com/users?per_page=10')
+    ]).pipe(map(user => [...user, 'end'])).subscribe(x => {
+        console.log('first: ', x)
+    })
+
+    // concat(
+    //     ajax(`https://api.github.com/users?per_page=5`),
+    //     ajax(`https://api.github.com/users?per_page=10`),
+    // ).pipe(map(user => user.response)).subscribe(x => {
+    //     console.log('second: ', x)
+    // })
+
+    // concat only concat two, so must use merge
+    // merge(
+    //     of(1, 2, 3),
+    //     ajax(`https://api.github.com/users?per_page=5`).pipe(map(user => user.response)),
+    //     new Observable(subscriber => {
+    //         subscriber.next(4)
+    //         subscriber.next(5)
+    //         subscriber.next(6)
+    //     }),
+    //     new Observable(subscriber => {
+    //         setTimeout(() => {
+    //             subscriber.next(7)
+    //         }, 300)
+    //     }),
+    //     ajax(`https://api.github.com/users?per_page=10`).pipe(map(user => user.response)),
+    //     from([8, 9, 10])
+    // ).subscribe({
+    //     next: x => {
+    //         console.log(x)
+    //     },
+    //     complete: () => {
+    //         console.log('Complete!')
+    //     }
+    // })
+
+
+    // obs.subscribe(x => {
+    //     console.log(x)
+    // })
+
+
+</script>
+
+</body>
+</html>

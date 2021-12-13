@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Use</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/rxjs/7.3.0/rxjs.umd.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+
+<script>
+
+    const {from, operators, of, Observable} = rxjs
+    const {mergeMap, map, delay} = operators
+
+    const urls = [
+        'http://localhost:3000/first-heroes',
+        'http://localhost:3000/second-heroes',
+        'http://localhost:3000/third-heroes',
+        'http://localhost:3000/fourth-heroes',
+    ]
+
+    const render = () => {
+
+    }
+
+    const store = new Observable(observer => {
+        axios.get('http://localhost:3000/first-heroes')
+            .then(res => {
+                observer.next(res.data)
+                observer.complete()
+            })
+            .catch(error => {
+                observer.error(error)
+            })
+    })
+
+    store.subscribe(data => {
+        console.log('=== data ===', data)
+    })
+
+
+</script>
+
+</body>
+</html>

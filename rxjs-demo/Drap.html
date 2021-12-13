@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drap</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/rxjs/7.3.0/rxjs.umd.js"></script>
+    <style>
+
+        #red-box {
+            width: 100px;
+            height: 100px;
+            background-color: #f00;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="red-box">
+
+</div>
+
+<script>
+
+    const {fromEvent, interval, operators} = rxjs
+    const {scan, debounce} = operators
+    const redBox = document.querySelector('#red-box')
+
+    fromEvent(redBox, 'click').subscribe(() => {
+        console.log('Clicked!')
+    })
+
+    const clicks = fromEvent(document, 'click');
+    const result = clicks.pipe(
+        scan((i) => ++i, 1),
+        debounce((i) => interval(200 * i))
+    );
+    result.subscribe(x => console.log(x));
+
+
+</script>
+
+</body>
+</html>
