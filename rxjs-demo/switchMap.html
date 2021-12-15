@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SwitchMap</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/rxjs/7.3.0/rxjs.umd.js"></script>
+</head>
+<body>
+
+<script>
+
+    const {ajax, operators} = rxjs
+    const {map, switchMap} = operators
+
+    const http = {
+        get: url => ajax.ajax(url).pipe(map(v => v.response))
+    }
+
+    const getFirstUserInfo = () => {
+        return http.get('https://api.github.com/users').pipe(
+            map(users => users?.[0]?.['login']),
+            switchMap(username => http.get(`https://api.github.com/users/${username}`))
+        )
+    }
+
+    getFirstUserInfo().subscribe(firstUserInfo => {
+        console.log('Userinfo: ', firstUserInfo)
+    })
+
+</script>
+
+</body>
+</html>
