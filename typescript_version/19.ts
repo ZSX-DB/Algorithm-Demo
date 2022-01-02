@@ -11,13 +11,9 @@ const removeNthFromEnd = (head: ListNode, n: number): ListNode | null => {
         return head.next
     }
     node = head
-    while (node) {
-        if (counter - 1 === n) {
-            node.next = node.next.next
-            break
-        }
+    for (let i: number = 1; i < counter - n; i++) {
         node = node.next
-        counter--
     }
+    node.next = node.next.next
     return head
 }
