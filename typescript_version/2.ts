@@ -1,5 +1,3 @@
-import {ListNode} from "./common"
-
 const addTwoNumbers = (l1: ListNode, l2: ListNode): ListNode => {
     const getNum = (l: ListNode): bigint => {
         const nums: number[] = []

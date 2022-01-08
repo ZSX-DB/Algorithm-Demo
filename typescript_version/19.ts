@@ -1,5 +1,3 @@
-import {ListNode} from "./common"
-
 // const removeNthFromEnd = (head: ListNode, n: number): ListNode | null => {
 //     let counter: number = 0
 //     let node: ListNode | null = head
