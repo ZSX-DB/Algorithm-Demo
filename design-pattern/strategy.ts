@@ -23,12 +23,13 @@
  *
  */
 
+type Level = 'A' | 'B' | 'C' | 'D' | 'E'
 
-// 1、算法独立封装，任务分发
-// 2、复用性更好，不局限于 Context 调用
-// 3、代码阅读性提高
+type Kpi = {
+    [key in Level]: (salary: number) => number
+}
 
-const kpi = {
+const kpi: Kpi = {
     'A': salary => salary * 1.2,
     'B': salary => salary * 1.1,
     'C': salary => salary,
@@ -36,10 +37,8 @@ const kpi = {
     'E': salary => salary * 0.8
 }
 
-const setSalary = (level, salary) => kpi[level](salary)
+const getSalary = (level: Level, salary: number): number => kpi[level](salary)
 
-console.log(setSalary('A', 20000))
-console.log(setSalary('B', 10000))
-console.log(setSalary('D', 9000))
-
-
+console.log(getSalary('A', 20000))
+console.log(getSalary('B', 10000))
+console.log(getSalary('D', 9000))
