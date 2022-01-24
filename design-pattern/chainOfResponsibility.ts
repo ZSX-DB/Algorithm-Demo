@@ -72,8 +72,9 @@ const jpgHandler = new JPGHandler()
 const mdHandler = new MDHandler()
 const exeHandler = new ExeHandler()
 
+// 适合于有前后关系的加工关系
 jpgHandler.setNext(mdHandler).setNext(exeHandler)
 
-jpgHandler.read("girl.jpg")
 jpgHandler.read("learn.md")
+jpgHandler.read("girl.jpg")
 jpgHandler.read("category.excel")
