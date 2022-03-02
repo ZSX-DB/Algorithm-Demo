@@ -1,46 +1,38 @@
-const service = {
-    _data: '',
-    getData() {
-        return this._data
+var service = {
+    data: '',
+    getData: function () {
+        return this.data;
     },
-    setData(data) {
-        this._data = data
+    setData: function (data) {
+        this.data = data;
     }
-}
-
-
-class Page1 {
-    constructor(service) {
-        this._service = service
+};
+var Page1 = /** @class */ (function () {
+    function Page1(service) {
+        this.service = service;
     }
-
-    setDataToService(data) {
-        this._service.setData(data)
+    Page1.prototype.setDataToService = function (data) {
+        this.service.setData(data);
+    };
+    Page1.prototype.getDataFromService = function () {
+        return this.service.getData();
+    };
+    return Page1;
+}());
+var Page2 = /** @class */ (function () {
+    function Page2(service) {
+        this.service = service;
     }
-
-    getDataFromService() {
-        return this._service.getData()
-    }
-
-}
-
-class Page2 {
-    constructor(service) {
-        this._service = service
-    }
-
-    setDataToService(data) {
-        this._service.setData(data)
-    }
-
-    getDataFromService() {
-        return this._service.getData()
-    }
-
-}
-
+    Page2.prototype.setDataToService = function (data) {
+        this.service.setData(data);
+    };
+    Page2.prototype.getDataFromService = function () {
+        return this.service.getData();
+    };
+    return Page2;
+}());
 // 与类相比，核心是注入同一个实例
-const p1 = new Page1(service)
-const p2 = new Page2(service)
-p1.setDataToService('neo')
-console.log(p2.getDataFromService())
+var p1 = new Page1(service);
+var p2 = new Page2(service);
+p1.setDataToService('neo');
+console.log(p2.getDataFromService());
