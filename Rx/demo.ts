@@ -74,28 +74,20 @@ class Observable {
 const source = new Observable((observer) => {
     let i = 0;
     const timer = setInterval(() => {
-        observer.next(++i);
-    }, 1000);
+        observer.next(++i)
+    }, 1000)
     return () => {
         clearInterval(timer)
     }
-    // return {
-    //     unsubscribe: () => {
-    //         clearInterval(timer)
-    //     }
-    // }
-    // return function unsubscribe() {
-    //     clearInterval(timer);
-    // };
-});
+})
 const subscription = source.subscribe({
     next: (v) => {
         console.log(v)
     },
     error: (err) => console.error(err),
-    complete: () => console.log('complete'),
-});
+    complete: () => console.log('complete')
+})
 
 setTimeout(() => {
-    subscription.unsubscribe();
-}, 4500);
+    subscription.unsubscribe()
+}, 4500)

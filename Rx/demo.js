@@ -70,14 +70,6 @@ var source = new Observable(function (observer) {
     return function () {
         clearInterval(timer);
     };
-    // return {
-    //     unsubscribe: () => {
-    //         clearInterval(timer)
-    //     }
-    // }
-    // return function unsubscribe() {
-    //     clearInterval(timer);
-    // };
 });
 var subscription = source.subscribe({
     next: function (v) {
