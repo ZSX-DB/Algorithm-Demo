@@ -1,0 +1,1 @@
+type CamelCase<S extends string,S1 = Lowercase<S>> = S1 extends `${infer prefix}_${infer suffix}` ? `${prefix}${Capitalize<CamelCase<suffix>>}` : S1
