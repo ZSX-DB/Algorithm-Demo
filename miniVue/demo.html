@@ -192,7 +192,8 @@
             }
             else {
                 var newVDom = component.render();
-                patch(prevVDom, newVDom);
+                patch(prevVDom, newVDom)
+                console.log('prev === new',  newVDom);
                 prevVDom = newVDom;
             }
         });
