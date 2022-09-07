@@ -1,1 +1,0 @@
-const stoneGame = piles => true
